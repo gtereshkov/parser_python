@@ -25,15 +25,11 @@ def get_price(link):
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	soup.encoding = 'utf-8'
 
-	if soup.find("a", class_="offers-description__link offers-description__link_subsidiary offers-description__link_nodecor") == None :
-		parse_result = None
-	else :
+	if soup.find("a", class_="offers-description__link offers-description__link_subsidiary offers-description__link_nodecor") :
 		parse_result = soup.find("a", class_="offers-description__link offers-description__link_subsidiary offers-description__link_nodecor").find("span", class_="helpers_hide_tablet")
-	
-	if parse_result == None :
-		price = 'Net v nalichii'
-	else:
 		price = parse_result.text.strip()
+	else :
+		price = 'Net v nalichii'
 	return price
 
 
