@@ -24,11 +24,16 @@ def get_price(link):
 	html_doc = urllib.request.urlopen(link)
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	soup.encoding = 'utf-8'
-	parse_result = soup.find('a.offers-description__link offers-description__link_subsidiary offers-description__link_nodecor > span.helpers_hide_tablet')
+
+	if soup.find("a", class_="offers-description__link offers-description__link_subsidiary offers-description__link_nodecor") == None :
+		parse_result = None
+	else :
+		parse_result = soup.find("a", class_="offers-description__link offers-description__link_subsidiary offers-description__link_nodecor").find("span", class_="helpers_hide_tablet")
+	
 	if parse_result == None :
 		price = 'Net v nalichii'
 	else:
-		price = parse_result.content
+		price = parse_result.text.strip()
 	return price
 
 
